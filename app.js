@@ -6,6 +6,16 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.set('layout', './layouts/main');
 
+let etatmodule = 
+{
+    1: "off",
+    2: "off",
+    3: "off",
+    4: "off",
+    5: "off",
+    6: "off"
+}
+
 // page d'accueil
 app.get('/', function (req, res, next) {
     res.render('pages/acceuil', { title: 'Accueil' });
@@ -29,16 +39,46 @@ app.get('/module/:numero', (req, res) => {
 
     if (numero <= 6 && numero >= 1) 
     {
+        if (etatmodule[numero] === "on") 
+        {
+            etatmodule[numero] = "off";
+        }       
+        else 
+        {
+            etatmodule[numero] = "on";
+        }
         res.render(`pages/module`, 
         { 
             title: `Module ${numero}`,
-            numero
+            numero,
+            etat: etatmodule[numero]
         });
     } 
     else 
     {
         res.status(400).send('MODULE INCONNU');
     }
+});
+
+app.get('/reset', (req, res) => 
+{
+    for (let i = 1; i <= 6; i++) 
+    {
+        etatmodule[i] = "off";
+    }
+    res.render('pages/reset', 
+    { 
+        title: 'Reset' 
+    });
+});
+
+app.get('/controle', (req, res) => 
+{
+    res.render('pages/controle', 
+    { 
+        title: 'Controle',
+        etatmodule: etatmodule 
+    });
 });
 
 app.use(function (req, res) {

@@ -1,0 +1,20 @@
+<h1><%= title %></h1>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Module</th>
+        <th>État</th>
+    </tr>
+    <% for (let i = 1; i <= 6; i++) { %>
+        <tr>
+            <td>Module <%= i %></td>
+            <td>
+                <% if (etatmodule[i] === "on") { %>
+                     ON
+                <% } else { %>
+                     OFF
+                <% } %>
+            </td>
+        </tr>
+    <% } %>
+</table>
