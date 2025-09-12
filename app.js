@@ -1,14 +1,20 @@
 var express = require('express');
 var app = express();
-app.set('view engine', 'ejs');
+var expressLayouts = require('express-ejs-layouts');
 
+app.set('view engine', 'ejs');
+app.use(expressLayouts);
+app.set('layout', './layouts/main');
+
+// page d'accueil
 app.get('/', function (req, res, next) {
-    res.send('Hello World!');
+    res.render('pages/acceuil', { title: 'Accueil' });
 });
 
 // Page contact
 app.get('/contact', (req, res) => {
     res.render('pages/contact', {
+        title: 'Contact',
         nom: 'Levasseur',
         prenom: 'Nathan',
         adresse: '100 Rue duquet, sainte-thérèse, QC',
@@ -17,13 +23,20 @@ app.get('/contact', (req, res) => {
     });
 });
 
-// Page recherche avec route dynamique
+// Page module
 app.get('/module/:numero', (req, res) => {
     let numero = req.params.numero;
 
-    if (numero <= 6 && numero >= 1) {
-        res.send(`Vous êtes dans le module ${numero}`);
-    } else {
+    if (numero <= 6 && numero >= 1) 
+    {
+        res.render(`pages/module`, 
+        { 
+            title: `Module ${numero}`,
+            numero
+        });
+    } 
+    else 
+    {
         res.status(400).send('MODULE INCONNU');
     }
 });
