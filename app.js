@@ -1,3 +1,11 @@
+/*
+ * @file     app.js
+ * @author   Nathan Levasseur (202339974@edu.clg.qc.ca)
+ * @version  0.01
+ * @date     2025-09-12
+ * @brief    Code javascript pour le serveur web
+ */
+
 var express = require('express');
 var app = express();
 var expressLayouts = require('express-ejs-layouts');
@@ -86,5 +94,5 @@ app.use(function (req, res) {
     res.end('<h1>Erreur 404<h1> Page introuvable !');
 });
 
-app.listen(8080);
+app.listen(8080, "0.0.0.0")
 console.log("Le serveur est lancé sur le port 8080");
